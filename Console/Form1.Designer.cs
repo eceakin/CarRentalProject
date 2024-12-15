@@ -30,12 +30,13 @@
         {
             this.dgwFilter = new System.Windows.Forms.DataGridView();
             this.gbxModel = new System.Windows.Forms.GroupBox();
-            this.cbxModel = new System.Windows.Forms.ComboBox();
             this.lblModel = new System.Windows.Forms.Label();
             this.gbxPrice = new System.Windows.Forms.GroupBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.lblPrice = new System.Windows.Forms.Label();
             this.btnRent = new System.Windows.Forms.Button();
+            this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dgwRentals = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
@@ -50,28 +51,18 @@
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
             this.dgwFilter.RowTemplate.Height = 24;
-            this.dgwFilter.Size = new System.Drawing.Size(465, 270);
+            this.dgwFilter.Size = new System.Drawing.Size(458, 270);
             this.dgwFilter.TabIndex = 0;
             // 
             // gbxModel
             // 
-            this.gbxModel.Controls.Add(this.cbxModel);
             this.gbxModel.Controls.Add(this.lblModel);
             this.gbxModel.Location = new System.Drawing.Point(23, 28);
             this.gbxModel.Name = "gbxModel";
-            this.gbxModel.Size = new System.Drawing.Size(746, 100);
+            this.gbxModel.Size = new System.Drawing.Size(499, 100);
             this.gbxModel.TabIndex = 1;
             this.gbxModel.TabStop = false;
             this.gbxModel.Text = "Modele Göre  Ara ";
-            // 
-            // cbxModel
-            // 
-            this.cbxModel.FormattingEnabled = true;
-            this.cbxModel.Location = new System.Drawing.Point(109, 47);
-            this.cbxModel.Name = "cbxModel";
-            this.cbxModel.Size = new System.Drawing.Size(330, 24);
-            this.cbxModel.TabIndex = 1;
-            this.cbxModel.SelectedIndexChanged += new System.EventHandler(this.cbxModel_SelectedIndexChanged);
             // 
             // lblModel
             // 
@@ -88,7 +79,7 @@
             this.gbxPrice.Controls.Add(this.lblPrice);
             this.gbxPrice.Location = new System.Drawing.Point(23, 134);
             this.gbxPrice.Name = "gbxPrice";
-            this.gbxPrice.Size = new System.Drawing.Size(746, 100);
+            this.gbxPrice.Size = new System.Drawing.Size(97, 100);
             this.gbxPrice.TabIndex = 2;
             this.gbxPrice.TabStop = false;
             this.gbxPrice.Text = "Fiyata Göre Ara";
@@ -97,7 +88,7 @@
             // 
             this.txtPrice.Location = new System.Drawing.Point(109, 47);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(330, 22);
+            this.txtPrice.Size = new System.Drawing.Size(121, 22);
             this.txtPrice.TabIndex = 1;
             // 
             // lblPrice
@@ -111,13 +102,27 @@
             // 
             // btnRent
             // 
-            this.btnRent.Location = new System.Drawing.Point(840, 147);
+            this.btnRent.Location = new System.Drawing.Point(447, 220);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(75, 23);
             this.btnRent.TabIndex = 3;
             this.btnRent.Text = "KİRALA";
             this.btnRent.UseVisualStyleBackColor = true;
             this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
+            // 
+            // dtpStartDate
+            // 
+            this.dtpStartDate.Location = new System.Drawing.Point(431, 134);
+            this.dtpStartDate.Name = "dtpStartDate";
+            this.dtpStartDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpStartDate.TabIndex = 5;
+            // 
+            // dtpEndDate
+            // 
+            this.dtpEndDate.Location = new System.Drawing.Point(431, 181);
+            this.dtpEndDate.Name = "dtpEndDate";
+            this.dtpEndDate.Size = new System.Drawing.Size(200, 22);
+            this.dtpEndDate.TabIndex = 6;
             // 
             // dgwRentals
             // 
@@ -134,6 +139,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 566);
+            this.Controls.Add(this.dtpEndDate);
+            this.Controls.Add(this.dtpStartDate);
             this.Controls.Add(this.dgwRentals);
             this.Controls.Add(this.btnRent);
             this.Controls.Add(this.gbxPrice);
@@ -156,12 +163,13 @@
 
         private System.Windows.Forms.DataGridView dgwFilter;
         private System.Windows.Forms.GroupBox gbxModel;
-        private System.Windows.Forms.ComboBox cbxModel;
         private System.Windows.Forms.Label lblModel;
         private System.Windows.Forms.GroupBox gbxPrice;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Button btnRent;
+        private System.Windows.Forms.DateTimePicker dtpStartDate;
+        private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.DataGridView dgwRentals;
     }
 }

@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,11 +21,6 @@ namespace Console
 {
     public partial class Form1 : Form
     {
-      /*  private ICarManager carManager;
-        private IRentalManager rentalManager;
-        
-        private IRentalDal rentalDal;
-        private ICarDal carDal;*/
         public Form1()
         {
             InitializeComponent();
@@ -41,18 +38,9 @@ namespace Console
         private void Form1_Load(object sender, EventArgs e)
         {
             ListOfRentals();
-            ListOfCars();
-          //  ListAvailableCars();
+            ListOfCars();           
         }
 
-        /* private void ListOfRentals()
-         {
-             using (AppDbContext context = new AppDbContext())
-             {
-                 dgwFilter.DataSource = context.Rentals.ToList();
-
-             }
-         }*/
         private void ListOfRentals()
         {
             using (AppDbContext context = new AppDbContext())
@@ -77,55 +65,35 @@ namespace Console
             }
         }
 
-        /*  private void ListRentalsByCarId(int carId)
-          {
-              using (AppDbContext context = new AppDbContext())
-              {
-                  dgwFilter.DataSource = context.Rentals.Where(p => p.CarId == carId).ToList();
-
-              }
-          }*/
-        private void ListRentalsByCarId(int carId)
-        {
-            using (AppDbContext context = new AppDbContext())
-            {
-                var rentalsWithCars = from rental in context.Rentals
-                                      join car in context.Cars
-                                      on rental.CarId equals car.CarId
-                                      where car.CarId == carId
-                                      select new
-                                      {
-                                          RentalId = rental.RentalId,
-                                          Model = car.Model,
-                                          UserId = rental.UserId,
-                                          StartDate = rental.StartDate,
-                                          EndDate = rental.EndDate
-                                      };
-
-                dgwRentals.DataSource = rentalsWithCars.ToList();
-                dgwRentals.Columns["RentalId"].Visible = false;
-                dgwRentals.Columns["UserId"].Visible = false;
-            }
-        }
+        
         private void ListOfCars()
         {
             using (AppDbContext context = new AppDbContext())
             {
-                /*cbxModel.DataSource = context.Cars.ToList();
-                cbxModel.DisplayMember = "Model";
-                cbxModel.ValueMember = "CarId";*/
+                //cbxModel.DataSource = context.Cars.ToList();
+               
                 CarManager _carManagger = new CarManager(new CarDal());
                 dgwFilter.DataSource = _carManagger.GetAvailableCars();
+               
                 dgwFilter.Columns["isAvailable"].Visible = false;
 
 
             }
         }
-        private void RentCar(int carId)
+   
+
+
+        private void RentCar(int carId, DateTime startDate, DateTime endDate)
         {
+            if (startDate >= endDate)
+            {
+                MessageBox.Show("Başlangıç tarihi bitiş tarihinden önce olmalıdır.");
+                return;
+            }
+
             using (AppDbContext context = new AppDbContext())
             {
-                // Seçilen aracı güncelle
+                // Seçilen aracı kontrol et
                 var car = context.Cars.FirstOrDefault(c => c.CarId == carId);
                 if (car != null && car.isAvailable)
                 {
@@ -136,12 +104,11 @@ namespace Console
                     var rental = new Rental
                     {
                         CarId = carId,
-                        UserId = GetCurrentUserId(), // Mevcut kullanıcı ID'sini alın (bunu uygulamanıza uygun hale getirin)
-                        StartDate = DateTime.Now,    // Kiralama başlangıç tarihi
-                        EndDate = null               // Kullanıcı aracı teslim edene kadar boş bırakılır
+                        UserId = GetCurrentUserId(), // Mevcut kullanıcı ID'sini alın
+                        StartDate = startDate,
+                        EndDate = endDate
                     };
 
-                    // Rental kaydını ekleyin
                     context.Rentals.Add(rental);
                     context.SaveChanges(); // Değişiklikleri kaydet
 
@@ -154,8 +121,9 @@ namespace Console
             }
 
             // Listeyi güncelle
-            ListOfRentals();
+           
             ListOfCars();
+            ListOfRentals();
         }
         private int GetCurrentUserId()
         {
@@ -164,44 +132,125 @@ namespace Console
             return 1; // Örneğin, 1 numaralı kullanıcı
         }
 
-        private void cbxModel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                ListRentalsByCarId(Convert.ToInt32(cbxModel.SelectedValue));
-            }
-            catch
-            {
-
-                
-            }
-           
-        }
-
-        private void ListAvailableCars()
-        {
-            using (AppDbContext context = new AppDbContext())
-            {
-                // Sadece isAvailable == true olan araçları listele
-                var availableCars = context.Cars.Where(c => c.isAvailable).ToList();
-
-                // DataGridView'e bu listeyi ata
-                dgwFilter.DataSource = availableCars;
-            }
-        }
-
         private void btnRent_Click(object sender, EventArgs e)
         {
             if (dgwFilter.SelectedRows.Count > 0)
             {
                 int selectedCarId = Convert.ToInt32(dgwFilter.SelectedRows[0].Cells["CarId"].Value);
-                RentCar(selectedCarId);
+                DateTime startDate = dtpStartDate.Value.Date;
+                DateTime endDate = dtpEndDate.Value.Date;
+
+                RentCar(selectedCarId, startDate, endDate); // Tarihlerle birlikte aracı kirala
             }
             else
             {
                 MessageBox.Show("Lütfen bir araç seçin.");
             }
+
+
         }
+
+
+
+
+
+
+
+
+        /*
+                private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+                {
+                    try
+                    {
+                        ListOfCarsByModel(Convert.ToInt32(comboBox1.SelectedValue));
+                    }
+                    catch 
+                    {
+
+
+                    }
+                }
+                private void ListAvailableCars()
+                {
+                    using (AppDbContext context = new AppDbContext())
+                    {
+                        // Sadece isAvailable == true olan araçları listele
+                        var availableCars = context.Cars.Where(c => c.isAvailable).ToList();
+
+                        // DataGridView'e bu listeyi ata
+                        dgwFilter.DataSource = availableCars;
+                    }
+                }
+                private void cbxModel_SelectedIndexChanged(object sender, EventArgs e)
+                {
+                    try
+                    {
+                        ListRentalsByCarId(Convert.ToInt32(cbxModel.SelectedValue));
+                    }
+                    catch
+                    {
+
+
+                    }
+
+                }
+                private void ListOfCarsByModel(int carId)
+                {
+                    using (AppDbContext context = new AppDbContext())
+                    {
+                        //cbxModel.DataSource = context.Cars.ToList();
+                        dgwFilter.DataSource = context.Cars.Where(p => p.CarId == carId).ToList();
+
+                        //dgwFilter.Columns["isAvailable"].Visible = false;
+
+
+                    }
+                }
+                private void ListRentalsByCarId(int carId)
+                {
+                    using (AppDbContext context = new AppDbContext())
+                    {
+                        dgwRentals.DataSource = context.Rentals.Where(p => p.CarId == carId).ToList();
+
+                    }
+                }
+                /* private void ListRentalsByCarId(int carId)
+                 {
+                     using (AppDbContext context = new AppDbContext())
+                     {
+                         var rentalsWithCars = from rental in context.Rentals
+                                               join car in context.Cars
+                                               on rental.CarId equals car.CarId
+                                               where car.CarId == carId
+                                               select new
+                                               {
+                                                   RentalId = rental.RentalId,
+                                                   Model = car.Model,
+                                                   UserId = rental.UserId,
+                                                   StartDate = rental.StartDate,
+                                                   EndDate = rental.EndDate
+                                               };
+
+                         dgwRentals.DataSource = rentalsWithCars.ToList();
+                         dgwRentals.Columns["RentalId"].Visible = false;
+                         dgwRentals.Columns["UserId"].Visible = false;
+                     }
+                 }
+
+
+
+
+
+                */
+
+
+
+
+
+
+
+
+
 
 
         /* private void button1_Click(object sender, EventArgs e)
@@ -275,6 +324,33 @@ LoadListings(); // Listeyi yenile
 }
 }
 */
+        /*private void ListCarModelCBX()
+           {
+               using (AppDbContext context = new AppDbContext())
+               {
+                   // Tüm araçları alıyoruz ve Model sütununda benzersiz olanları alıyoruz
+                   var carModels = context.Cars
+                       .Select(c => c.Model)
+                       .Distinct()
+                       .ToList();
+                   comboBox1.DataSource = carModels;
+                   comboBox1.DisplayMember = "Model";
+                   comboBox1.ValueMember = "CarId";
+               }
+           }*/
+
+        /* private void ListOfRentals()
+         {
+             using (AppDbContext context = new AppDbContext())
+             {
+                 dgwFilter.DataSource = context.Rentals.ToList();
+
+             }
+         }*/
+
+
+
+
         /*   private void btnFilter_Click(object sender, EventArgs e)
            {
                string selectedModel = cbCarModel.SelectedItem?.ToString();
