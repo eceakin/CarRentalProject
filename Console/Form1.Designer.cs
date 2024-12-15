@@ -30,11 +30,12 @@
         {
             this.dgwFilter = new System.Windows.Forms.DataGridView();
             this.gbxModel = new System.Windows.Forms.GroupBox();
-            this.lblModel = new System.Windows.Forms.Label();
             this.cbxModel = new System.Windows.Forms.ComboBox();
+            this.lblModel = new System.Windows.Forms.Label();
             this.gbxPrice = new System.Windows.Forms.GroupBox();
-            this.lblPrice = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
+            this.lblPrice = new System.Windows.Forms.Label();
+            this.btnRent = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
             this.gbxPrice.SuspendLayout();
@@ -43,11 +44,11 @@
             // dgwFilter
             // 
             this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwFilter.Location = new System.Drawing.Point(12, 240);
+            this.dgwFilter.Location = new System.Drawing.Point(12, 263);
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
             this.dgwFilter.RowTemplate.Height = 24;
-            this.dgwFilter.Size = new System.Drawing.Size(757, 150);
+            this.dgwFilter.Size = new System.Drawing.Size(498, 270);
             this.dgwFilter.TabIndex = 0;
             // 
             // gbxModel
@@ -61,6 +62,15 @@
             this.gbxModel.TabStop = false;
             this.gbxModel.Text = "Modele Göre  Ara ";
             // 
+            // cbxModel
+            // 
+            this.cbxModel.FormattingEnabled = true;
+            this.cbxModel.Location = new System.Drawing.Point(109, 47);
+            this.cbxModel.Name = "cbxModel";
+            this.cbxModel.Size = new System.Drawing.Size(330, 24);
+            this.cbxModel.TabIndex = 1;
+            this.cbxModel.SelectedIndexChanged += new System.EventHandler(this.cbxModel_SelectedIndexChanged);
+            // 
             // lblModel
             // 
             this.lblModel.AutoSize = true;
@@ -69,14 +79,6 @@
             this.lblModel.Size = new System.Drawing.Size(45, 16);
             this.lblModel.TabIndex = 0;
             this.lblModel.Text = "Model";
-            // 
-            // cbxModel
-            // 
-            this.cbxModel.FormattingEnabled = true;
-            this.cbxModel.Location = new System.Drawing.Point(109, 47);
-            this.cbxModel.Name = "cbxModel";
-            this.cbxModel.Size = new System.Drawing.Size(330, 24);
-            this.cbxModel.TabIndex = 1;
             // 
             // gbxPrice
             // 
@@ -89,6 +91,13 @@
             this.gbxPrice.TabStop = false;
             this.gbxPrice.Text = "Fiyata Göre Ara";
             // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(109, 47);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(330, 22);
+            this.txtPrice.TabIndex = 1;
+            // 
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
@@ -98,18 +107,22 @@
             this.lblPrice.TabIndex = 0;
             this.lblPrice.Text = "Fiyat";
             // 
-            // txtPrice
+            // btnRent
             // 
-            this.txtPrice.Location = new System.Drawing.Point(109, 47);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(330, 22);
-            this.txtPrice.TabIndex = 1;
+            this.btnRent.Location = new System.Drawing.Point(681, 329);
+            this.btnRent.Name = "btnRent";
+            this.btnRent.Size = new System.Drawing.Size(75, 23);
+            this.btnRent.TabIndex = 3;
+            this.btnRent.Text = "button1";
+            this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1008, 566);
+            this.Controls.Add(this.btnRent);
             this.Controls.Add(this.gbxPrice);
             this.Controls.Add(this.gbxModel);
             this.Controls.Add(this.dgwFilter);
@@ -134,6 +147,7 @@
         private System.Windows.Forms.GroupBox gbxPrice;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label lblPrice;
+        private System.Windows.Forms.Button btnRent;
     }
 }
 

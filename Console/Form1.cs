@@ -27,8 +27,7 @@ namespace Console
         public Form1()
         {
             InitializeComponent();
-            _rentalManager = new RentalManager(rentalDal);
-            listingManager = new ListingManager(listingDal);
+          
 
 
            /* carDal = new CarDal();  // Örnek olarak CarDal'ı kullanıyoruz
@@ -39,78 +38,219 @@ namespace Console
             rentalManager = new RentalManager(rentalDal);*/
         }
 
-        private IRentalDal rentalDal;
-        private IListingDal listingDal;
-        private IRentalManager _rentalManager;
-        private IListingManager listingManager;
         private void Form1_Load(object sender, EventArgs e)
         {
-            ListOfRentals();
+            // ListOfRentals();
             ListOfCars();
-
+          //  ListAvailableCars();
         }
 
+        /* private void ListOfRentals()
+         {
+             using (AppDbContext context = new AppDbContext())
+             {
+                 dgwFilter.DataSource = context.Rentals.ToList();
+
+             }
+         }*/
         private void ListOfRentals()
         {
             using (AppDbContext context = new AppDbContext())
             {
-                dgwFilter.DataSource = context.Rentals.ToList();
+                var rentalsWithCars = from rental in context.Rentals
+                                      join car in context.Cars
+                                      on rental.CarId equals car.CarId
+                                      select new
+                                      {
+                                          RentalId = rental.RentalId,
+                                          Model = car.Model,
+                                          UserId = rental.UserId,
+                                          StartDate = rental.StartDate,
+                                          EndDate = rental.EndDate
+                                      };
 
+                RentalManager rentalManager = new RentalManager(new RentalDal());
+                dgwFilter.DataSource = rentalManager.GetAllRentals();
+                dgwFilter.Columns["RentalId"].Visible = false;
+                dgwFilter.Columns["UserId"].Visible = false;
+
+            }
+        }
+
+        /*  private void ListRentalsByCarId(int carId)
+          {
+              using (AppDbContext context = new AppDbContext())
+              {
+                  dgwFilter.DataSource = context.Rentals.Where(p => p.CarId == carId).ToList();
+
+              }
+          }*/
+        private void ListRentalsByCarId(int carId)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                var rentalsWithCars = from rental in context.Rentals
+                                      join car in context.Cars
+                                      on rental.CarId equals car.CarId
+                                      where car.CarId == carId
+                                      select new
+                                      {
+                                          RentalId = rental.RentalId,
+                                          Model = car.Model,
+                                          UserId = rental.UserId,
+                                          StartDate = rental.StartDate,
+                                          EndDate = rental.EndDate
+                                      };
+
+                dgwFilter.DataSource = rentalsWithCars.ToList();
+                dgwFilter.Columns["RentalId"].Visible = false;
+                dgwFilter.Columns["UserId"].Visible = false;
             }
         }
         private void ListOfCars()
         {
             using (AppDbContext context = new AppDbContext())
             {
-                cbxModel.DataSource = context.Cars.ToList();
+                /*cbxModel.DataSource = context.Cars.ToList();
                 cbxModel.DisplayMember = "Model";
+                cbxModel.ValueMember = "CarId";*/
+                CarManager _carManagger = new CarManager(new CarDal());
+                dgwFilter.DataSource = _carManagger.GetAvailableCars();
+                dgwFilter.Columns["isAvailable"].Visible = false;
+
 
             }
         }
+        private void RentCar(int carId)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                var car = context.Cars.FirstOrDefault(c => c.CarId == carId);
+                if (car != null)
+                {
+                    car.isAvailable = false; // Aracı kiralanmış olarak işaretle
+                    context.SaveChanges();
+
+                    MessageBox.Show("Araç başarıyla kiralandı!");
+                    ListAvailableCars(); // Listeyi güncelle
+                }
+                else
+                {
+                    MessageBox.Show("Araç bulunamadı.");
+                }
+            }
+        }
+
+        private void cbxModel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ListRentalsByCarId(Convert.ToInt32(cbxModel.SelectedValue));
+            }
+            catch
+            {
+
+                
+            }
+           
+        }
+
+        private void ListAvailableCars()
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Sadece isAvailable == true olan araçları listele
+                var availableCars = context.Cars.Where(c => c.isAvailable).ToList();
+
+                // DataGridView'e bu listeyi ata
+                dgwFilter.DataSource = availableCars;
+            }
+        }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            if (dgwFilter.SelectedRows.Count > 0)
+            {
+                int selectedCarId = Convert.ToInt32(dgwFilter.SelectedRows[0].Cells["CarId"].Value);
+                RentCar(selectedCarId);
+            }
+            else
+            {
+                MessageBox.Show("Lütfen bir araç seçin.");
+            }
+        }
+
+
+        /* private void button1_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  // Kullanıcıdan alınan verileri Rental nesnesine atama
+                  Rental newRental = new Rental
+                  {
+                      CarId = Convert.ToInt32(txtCarId.Text),
+                      StartDate = Convert.ToDateTime(txtStartDate.Text),
+                      EndDate = string.IsNullOrEmpty(txtEndDate.Text) ? (DateTime?)null : Convert.ToDateTime(txtEndDate.Text)
+                  };
+
+                  // RentalManager üzerinden ekleme işlemi
+                  RentalManager rentalManager = new RentalManager(new RentalDal());
+                  rentalManager.AddRental(newRental);
+
+                  // İşlem başarılıysa kullanıcıya bilgi verme ve listeyi güncelleme
+                  MessageBox.Show("Rental başarıyla eklendi.");
+                  ListOfRentals(); // DataGridView'deki listeyi güncelle
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show($"Hata: {ex.Message}");
+              }
+
+          }*/
         /*  private void LoadListings()
- {
-     IListingDal listingDal = new ListingDal();
-     ListingManager listingManager = new ListingManager(listingDal);
+{
+IListingDal listingDal = new ListingDal();
+ListingManager listingManager = new ListingManager(listingDal);
 
-     dataGridView1.DataSource = listingManager.GetAll(); 
- }
+dataGridView1.DataSource = listingManager.GetAll(); 
+}
 add button
- private void button1_Click(object sender, EventArgs e)
- {
-     using (var context = new AppDbContext())
-     {
-         var listing = new Listing
-         {
-             Title = titleTxt.Text,
-             Description = descriptionTxt.Text,
-             Price = Convert.ToInt32(priceTxt.Text)
-         };
-         context.Listings.Add(listing);
-         context.SaveChanges();
-     }
-     LoadListings();
+private void button1_Click(object sender, EventArgs e)
+{
+using (var context = new AppDbContext())
+{
+var listing = new Listing
+{
+Title = titleTxt.Text,
+Description = descriptionTxt.Text,
+Price = Convert.ToInt32(priceTxt.Text)
+};
+context.Listings.Add(listing);
+context.SaveChanges();
+}
+LoadListings();
 
- }
+}
 
 private void updateButton_Click(object sender, EventArgs e)
- {
-     if (dataGridView1.CurrentRow != null)
-     {
-         int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-         using (var context = new AppDbContext())
-         {
-             var listing = context.Listings.SingleOrDefault(x => x.Id == id);
-             if (listing != null)
-             {
-                 listing.Title = titleTxtUp.Text;
-                 listing.Description = descriptionTxtUp.Text;
-                 listing.Price = Convert.ToInt32(priceTxtUp.Text);
-                 context.SaveChanges();
-             }
-         }
-         LoadListings(); // Listeyi yenile
-     }
- }
+{
+if (dataGridView1.CurrentRow != null)
+{
+int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+using (var context = new AppDbContext())
+{
+var listing = context.Listings.SingleOrDefault(x => x.Id == id);
+if (listing != null)
+{
+listing.Title = titleTxtUp.Text;
+listing.Description = descriptionTxtUp.Text;
+listing.Price = Convert.ToInt32(priceTxtUp.Text);
+context.SaveChanges();
+}
+}
+LoadListings(); // Listeyi yenile
+}
+}
 */
         /*   private void btnFilter_Click(object sender, EventArgs e)
            {
