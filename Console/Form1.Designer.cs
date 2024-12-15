@@ -30,6 +30,8 @@
         {
             this.dgwFilter = new System.Windows.Forms.DataGridView();
             this.gbxModel = new System.Windows.Forms.GroupBox();
+            this.cbxRental = new System.Windows.Forms.ComboBox();
+            this.cbxCar = new System.Windows.Forms.ComboBox();
             this.lblModel = new System.Windows.Forms.Label();
             this.gbxPrice = new System.Windows.Forms.GroupBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
@@ -38,6 +40,8 @@
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dgwRentals = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
             this.gbxPrice.SuspendLayout();
@@ -56,6 +60,8 @@
             // 
             // gbxModel
             // 
+            this.gbxModel.Controls.Add(this.cbxRental);
+            this.gbxModel.Controls.Add(this.cbxCar);
             this.gbxModel.Controls.Add(this.lblModel);
             this.gbxModel.Location = new System.Drawing.Point(23, 28);
             this.gbxModel.Name = "gbxModel";
@@ -63,6 +69,24 @@
             this.gbxModel.TabIndex = 1;
             this.gbxModel.TabStop = false;
             this.gbxModel.Text = "Modele Göre  Ara ";
+            // 
+            // cbxRental
+            // 
+            this.cbxRental.FormattingEnabled = true;
+            this.cbxRental.Location = new System.Drawing.Point(314, 47);
+            this.cbxRental.Name = "cbxRental";
+            this.cbxRental.Size = new System.Drawing.Size(133, 24);
+            this.cbxRental.TabIndex = 2;
+            this.cbxRental.SelectedIndexChanged += new System.EventHandler(this.cbxRental_SelectedIndexChanged);
+            // 
+            // cbxCar
+            // 
+            this.cbxCar.FormattingEnabled = true;
+            this.cbxCar.Location = new System.Drawing.Point(121, 47);
+            this.cbxCar.Name = "cbxCar";
+            this.cbxCar.Size = new System.Drawing.Size(133, 24);
+            this.cbxCar.TabIndex = 1;
+            this.cbxCar.SelectedIndexChanged += new System.EventHandler(this.cbxCar_SelectedIndexChanged);
             // 
             // lblModel
             // 
@@ -134,11 +158,31 @@
             this.dgwRentals.Size = new System.Drawing.Size(498, 270);
             this.dgwRentals.TabIndex = 4;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(209, 244);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 16);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Uygun Araçlar";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(727, 244);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(109, 16);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Kiralanan Araçlar";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 566);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpEndDate);
             this.Controls.Add(this.dtpStartDate);
             this.Controls.Add(this.dgwRentals);
@@ -156,6 +200,7 @@
             this.gbxPrice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwRentals)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -171,6 +216,10 @@
         private System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.DataGridView dgwRentals;
+        private System.Windows.Forms.ComboBox cbxRental;
+        private System.Windows.Forms.ComboBox cbxCar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

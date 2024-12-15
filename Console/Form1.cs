@@ -38,7 +38,7 @@ namespace Console
         private void Form1_Load(object sender, EventArgs e)
         {
             ListOfRentals();
-            ListOfCars();           
+            ListOfCars();
         }
 
         private void ListOfRentals()
@@ -56,32 +56,143 @@ namespace Console
                                           StartDate = rental.StartDate,
                                           EndDate = rental.EndDate
                                       };
+                 var carModels = context.Cars
+                    .Select(c => c.Model)
+                    .Distinct()
+                    .ToList();
+                cbxRental.DataSource = carModels;
 
-                RentalManager rentalManager = new RentalManager(new RentalDal());
-                dgwRentals.DataSource = rentalManager.GetAllRentals();
-                dgwRentals.Columns["RentalId"].Visible = false;
-                dgwRentals.Columns["UserId"].Visible = false;
 
+            }
+            RentalManager rentalManager = new RentalManager(new RentalDal());
+            dgwRentals.DataSource = rentalManager.GetAllRentals();
+            dgwRentals.Columns["RentalId"].Visible = false;
+            dgwRentals.Columns["UserId"].Visible = false;
+
+        }
+       /* private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxRental.SelectedValue != null)
+            {
+                int selectedCarId = (int)cbxRental.SelectedValue;  // Seçilen aracın CarId'si
+
+                // Kiralamaları seçilen CarId'ye göre filtreliyoruz
+                ListRentalsByCarId(selectedCarId);
             }
         }
 
-        
-        private void ListOfCars()
+        private void ListRentalsByCarId(int carId)
         {
             using (AppDbContext context = new AppDbContext())
             {
-                //cbxModel.DataSource = context.Cars.ToList();
-               
-                CarManager _carManagger = new CarManager(new CarDal());
-                dgwFilter.DataSource = _carManagger.GetAvailableCars();
-               
-                dgwFilter.Columns["isAvailable"].Visible = false;
+                var rentals = from rental in context.Rentals
+                              join car in context.Cars
+                              on rental.CarId equals car.CarId
+                              where rental.CarId == carId
+                              select new
+                              {
+                                  RentalId = rental.RentalId,
+                                  Model = car.Model,
+                                  UserId = rental.UserId,
+                                  StartDate = rental.StartDate,
+                                  EndDate = rental.EndDate
+                              };
 
-
+                dgwRentals.DataSource = rentals.ToList();
+                dgwRentals.Columns["RentalId"].Visible = false;
+                dgwRentals.Columns["UserId"].Visible = false;
             }
         }
-   
+        private void ListOfCarsForRentals()
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Kiralanmış araçları buluyoruz
+                var rentedCars = context.Rentals
+                                        .Join(context.Cars, rental => rental.CarId, car => car.CarId, (rental, car) => new { car.CarId, car.Model })
+                                        .Distinct()
+                                        .ToList();
 
+                // ComboBox'ı kiralanan araçların modelleri ile dolduruyoruz
+                cbxRental.DataSource = rentedCars;
+                cbxRental.DisplayMember = "Model";  // Görüntüleyeceğimiz özellik
+                cbxRental.ValueMember = "CarId";  // Seçilen aracın CarId'sini tutacağız
+            }
+        }*/
+
+        private void ListOfCars()
+        {
+            /*  using (AppDbContext context = new AppDbContext())
+              {
+                  //cbxModel.DataSource = context.Cars.ToList();
+
+                  CarManager _carManagger = new CarManager(new CarDal());
+                  dgwFilter.DataSource = _carManagger.GetAvailableCars();
+
+                  dgwFilter.Columns["isAvailable"].Visible = false;
+
+
+              }*/
+
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Benzersiz araç modellerini alıyoruz
+                var carModels = context.Cars
+                    .Select(c => c.Model)
+                    .Distinct()
+                    .ToList();
+
+                // ComboBox'ı model listesi ile dolduruyoruz
+                cbxCar.DataSource = carModels;
+            }
+
+            // Kiralanabilir araçları listeleyelim
+            CarManager _carManager = new CarManager(new CarDal());
+            dgwFilter.DataSource = _carManager.GetAvailableCars();
+
+            dgwFilter.Columns["isAvailable"].Visible = false;
+        }
+
+        private void cbxCar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedModel = cbxCar.SelectedItem.ToString();  // Seçilen model
+
+            // Seçilen modele göre araçları filtreliyoruz
+            ListCarsByModel(selectedModel);
+        }
+        private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedModel = cbxRental.SelectedItem.ToString();
+            ListRentalsByModel(selectedModel);
+
+        }
+        private void ListRentalsByModel(string model)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Model == model)  // Kiralanabilir araçlar
+                    .ToList();
+
+                dgwRentals.DataSource = cars;
+            }
+        }
+
+
+
+        private void ListCarsByModel(string model)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Model == model && c.isAvailable == true)  // Kiralanabilir araçlar
+                    .ToList();
+
+                dgwFilter.DataSource = cars;
+            }
+        }
 
         private void RentCar(int carId, DateTime startDate, DateTime endDate)
         {
@@ -149,6 +260,10 @@ namespace Console
 
 
         }
+
+       
+
+
 
 
 
