@@ -28,151 +28,112 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cbCarModel = new System.Windows.Forms.ComboBox();
-            this.txtMin = new System.Windows.Forms.Label();
-            this.txtMax = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtMinPrice = new System.Windows.Forms.TextBox();
-            this.txtMaxPrice = new System.Windows.Forms.TextBox();
-            this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
-            this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
-            this.btnFilter = new System.Windows.Forms.Button();
-            this.dgvAvailableCars = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableCars)).BeginInit();
+            this.dgwFilter = new System.Windows.Forms.DataGridView();
+            this.gbxModel = new System.Windows.Forms.GroupBox();
+            this.lblModel = new System.Windows.Forms.Label();
+            this.cbxModel = new System.Windows.Forms.ComboBox();
+            this.gbxPrice = new System.Windows.Forms.GroupBox();
+            this.lblPrice = new System.Windows.Forms.Label();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
+            this.gbxModel.SuspendLayout();
+            this.gbxPrice.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cbCarModel
+            // dgwFilter
             // 
-            this.cbCarModel.FormattingEnabled = true;
-            this.cbCarModel.Location = new System.Drawing.Point(226, 292);
-            this.cbCarModel.Name = "cbCarModel";
-            this.cbCarModel.Size = new System.Drawing.Size(328, 24);
-            this.cbCarModel.TabIndex = 0;
+            this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwFilter.Location = new System.Drawing.Point(12, 240);
+            this.dgwFilter.Name = "dgwFilter";
+            this.dgwFilter.RowHeadersWidth = 51;
+            this.dgwFilter.RowTemplate.Height = 24;
+            this.dgwFilter.Size = new System.Drawing.Size(757, 150);
+            this.dgwFilter.TabIndex = 0;
             // 
-            // txtMin
+            // gbxModel
             // 
-            this.txtMin.AutoSize = true;
-            this.txtMin.Location = new System.Drawing.Point(285, 319);
-            this.txtMin.Name = "txtMin";
-            this.txtMin.Size = new System.Drawing.Size(28, 16);
-            this.txtMin.TabIndex = 2;
-            this.txtMin.Text = "Min";
+            this.gbxModel.Controls.Add(this.cbxModel);
+            this.gbxModel.Controls.Add(this.lblModel);
+            this.gbxModel.Location = new System.Drawing.Point(23, 28);
+            this.gbxModel.Name = "gbxModel";
+            this.gbxModel.Size = new System.Drawing.Size(746, 100);
+            this.gbxModel.TabIndex = 1;
+            this.gbxModel.TabStop = false;
+            this.gbxModel.Text = "Modele Göre  Ara ";
             // 
-            // txtMax
+            // lblModel
             // 
-            this.txtMax.AutoSize = true;
-            this.txtMax.Location = new System.Drawing.Point(448, 319);
-            this.txtMax.Name = "txtMax";
-            this.txtMax.Size = new System.Drawing.Size(32, 16);
-            this.txtMax.TabIndex = 3;
-            this.txtMax.Text = "Max";
+            this.lblModel.AutoSize = true;
+            this.lblModel.Location = new System.Drawing.Point(17, 47);
+            this.lblModel.Name = "lblModel";
+            this.lblModel.Size = new System.Drawing.Size(45, 16);
+            this.lblModel.TabIndex = 0;
+            this.lblModel.Text = "Model";
             // 
-            // label4
+            // cbxModel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(329, 30);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(121, 16);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Filtrelenmiş Araçlar";
+            this.cbxModel.FormattingEnabled = true;
+            this.cbxModel.Location = new System.Drawing.Point(109, 47);
+            this.cbxModel.Name = "cbxModel";
+            this.cbxModel.Size = new System.Drawing.Size(330, 24);
+            this.cbxModel.TabIndex = 1;
             // 
-            // txtMinPrice
+            // gbxPrice
             // 
-            this.txtMinPrice.Location = new System.Drawing.Point(226, 338);
-            this.txtMinPrice.Name = "txtMinPrice";
-            this.txtMinPrice.Size = new System.Drawing.Size(161, 22);
-            this.txtMinPrice.TabIndex = 5;
+            this.gbxPrice.Controls.Add(this.txtPrice);
+            this.gbxPrice.Controls.Add(this.lblPrice);
+            this.gbxPrice.Location = new System.Drawing.Point(23, 134);
+            this.gbxPrice.Name = "gbxPrice";
+            this.gbxPrice.Size = new System.Drawing.Size(746, 100);
+            this.gbxPrice.TabIndex = 2;
+            this.gbxPrice.TabStop = false;
+            this.gbxPrice.Text = "Fiyata Göre Ara";
             // 
-            // txtMaxPrice
+            // lblPrice
             // 
-            this.txtMaxPrice.Location = new System.Drawing.Point(393, 338);
-            this.txtMaxPrice.Name = "txtMaxPrice";
-            this.txtMaxPrice.Size = new System.Drawing.Size(161, 22);
-            this.txtMaxPrice.TabIndex = 6;
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Location = new System.Drawing.Point(17, 47);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(36, 16);
+            this.lblPrice.TabIndex = 0;
+            this.lblPrice.Text = "Fiyat";
             // 
-            // dtpStartDate
+            // txtPrice
             // 
-            this.dtpStartDate.Location = new System.Drawing.Point(226, 366);
-            this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(161, 22);
-            this.dtpStartDate.TabIndex = 7;
-            // 
-            // dtpEndDate
-            // 
-            this.dtpEndDate.Location = new System.Drawing.Point(393, 366);
-            this.dtpEndDate.Name = "dtpEndDate";
-            this.dtpEndDate.Size = new System.Drawing.Size(161, 22);
-            this.dtpEndDate.TabIndex = 8;
-            // 
-            // btnFilter
-            // 
-            this.btnFilter.Location = new System.Drawing.Point(355, 394);
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(75, 23);
-            this.btnFilter.TabIndex = 9;
-            this.btnFilter.Text = "Filtrele";
-            this.btnFilter.UseVisualStyleBackColor = true;
-            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
-            // 
-            // dgvAvailableCars
-            // 
-            this.dgvAvailableCars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAvailableCars.Location = new System.Drawing.Point(27, 49);
-            this.dgvAvailableCars.Name = "dgvAvailableCars";
-            this.dgvAvailableCars.RowHeadersWidth = 51;
-            this.dgvAvailableCars.RowTemplate.Height = 24;
-            this.dgvAvailableCars.Size = new System.Drawing.Size(761, 195);
-            this.dgvAvailableCars.TabIndex = 10;
-            this.dgvAvailableCars.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAvailableCars_CellContentClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(373, 273);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Model";
+            this.txtPrice.Location = new System.Drawing.Point(109, 47);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(330, 22);
+            this.txtPrice.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dgvAvailableCars);
-            this.Controls.Add(this.btnFilter);
-            this.Controls.Add(this.dtpEndDate);
-            this.Controls.Add(this.dtpStartDate);
-            this.Controls.Add(this.txtMaxPrice);
-            this.Controls.Add(this.txtMinPrice);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtMax);
-            this.Controls.Add(this.txtMin);
-            this.Controls.Add(this.cbCarModel);
+            this.Controls.Add(this.gbxPrice);
+            this.Controls.Add(this.gbxModel);
+            this.Controls.Add(this.dgwFilter);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableCars)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).EndInit();
+            this.gbxModel.ResumeLayout(false);
+            this.gbxModel.PerformLayout();
+            this.gbxPrice.ResumeLayout(false);
+            this.gbxPrice.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbCarModel;
-        private System.Windows.Forms.Label txtMin;
-        private System.Windows.Forms.Label txtMax;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtMinPrice;
-        private System.Windows.Forms.TextBox txtMaxPrice;
-        private System.Windows.Forms.DateTimePicker dtpStartDate;
-        private System.Windows.Forms.DateTimePicker dtpEndDate;
-        private System.Windows.Forms.Button btnFilter;
-        private System.Windows.Forms.DataGridView dgvAvailableCars;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgwFilter;
+        private System.Windows.Forms.GroupBox gbxModel;
+        private System.Windows.Forms.ComboBox cbxModel;
+        private System.Windows.Forms.Label lblModel;
+        private System.Windows.Forms.GroupBox gbxPrice;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.Label lblPrice;
     }
 }
 

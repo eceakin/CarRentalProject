@@ -12,7 +12,7 @@ namespace BusinessLayer.Concrete
 {
     public class ListingManager : IListingManager
     {
-        IListingDal _listingDal;
+        private readonly IListingDal _listingDal;
         //dependency injection 
         public ListingManager(IListingDal listingDal)
         {
@@ -31,6 +31,8 @@ namespace BusinessLayer.Concrete
 
         public List<Listing> GetAll()
         {
+
+
             return _listingDal.GetAll();
         }
 
