@@ -36,9 +36,11 @@
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.lblPrice = new System.Windows.Forms.Label();
             this.btnRent = new System.Windows.Forms.Button();
+            this.dgwRentals = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
             this.gbxPrice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwRentals)).BeginInit();
             this.SuspendLayout();
             // 
             // dgwFilter
@@ -48,7 +50,7 @@
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
             this.dgwFilter.RowTemplate.Height = 24;
-            this.dgwFilter.Size = new System.Drawing.Size(498, 270);
+            this.dgwFilter.Size = new System.Drawing.Size(465, 270);
             this.dgwFilter.TabIndex = 0;
             // 
             // gbxModel
@@ -109,19 +111,30 @@
             // 
             // btnRent
             // 
-            this.btnRent.Location = new System.Drawing.Point(681, 329);
+            this.btnRent.Location = new System.Drawing.Point(840, 147);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(75, 23);
             this.btnRent.TabIndex = 3;
-            this.btnRent.Text = "button1";
+            this.btnRent.Text = "KİRALA";
             this.btnRent.UseVisualStyleBackColor = true;
             this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
+            // 
+            // dgwRentals
+            // 
+            this.dgwRentals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwRentals.Location = new System.Drawing.Point(498, 263);
+            this.dgwRentals.Name = "dgwRentals";
+            this.dgwRentals.RowHeadersWidth = 51;
+            this.dgwRentals.RowTemplate.Height = 24;
+            this.dgwRentals.Size = new System.Drawing.Size(498, 270);
+            this.dgwRentals.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 566);
+            this.Controls.Add(this.dgwRentals);
             this.Controls.Add(this.btnRent);
             this.Controls.Add(this.gbxPrice);
             this.Controls.Add(this.gbxModel);
@@ -134,6 +147,7 @@
             this.gbxModel.PerformLayout();
             this.gbxPrice.ResumeLayout(false);
             this.gbxPrice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwRentals)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -148,6 +162,7 @@
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Button btnRent;
+        private System.Windows.Forms.DataGridView dgwRentals;
     }
 }
 

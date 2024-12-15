@@ -40,7 +40,7 @@ namespace Console
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // ListOfRentals();
+            ListOfRentals();
             ListOfCars();
           //  ListAvailableCars();
         }
@@ -70,9 +70,9 @@ namespace Console
                                       };
 
                 RentalManager rentalManager = new RentalManager(new RentalDal());
-                dgwFilter.DataSource = rentalManager.GetAllRentals();
-                dgwFilter.Columns["RentalId"].Visible = false;
-                dgwFilter.Columns["UserId"].Visible = false;
+                dgwRentals.DataSource = rentalManager.GetAllRentals();
+                dgwRentals.Columns["RentalId"].Visible = false;
+                dgwRentals.Columns["UserId"].Visible = false;
 
             }
         }
@@ -102,9 +102,9 @@ namespace Console
                                           EndDate = rental.EndDate
                                       };
 
-                dgwFilter.DataSource = rentalsWithCars.ToList();
-                dgwFilter.Columns["RentalId"].Visible = false;
-                dgwFilter.Columns["UserId"].Visible = false;
+                dgwRentals.DataSource = rentalsWithCars.ToList();
+                dgwRentals.Columns["RentalId"].Visible = false;
+                dgwRentals.Columns["UserId"].Visible = false;
             }
         }
         private void ListOfCars()
@@ -125,20 +125,43 @@ namespace Console
         {
             using (AppDbContext context = new AppDbContext())
             {
+                // Seçilen aracı güncelle
                 var car = context.Cars.FirstOrDefault(c => c.CarId == carId);
-                if (car != null)
+                if (car != null && car.isAvailable)
                 {
-                    car.isAvailable = false; // Aracı kiralanmış olarak işaretle
-                    context.SaveChanges();
+                    car.isAvailable = false; // Artık kiralanabilir değil
+                    context.SaveChanges();   // Değişiklikleri kaydet
 
-                    MessageBox.Show("Araç başarıyla kiralandı!");
-                    ListAvailableCars(); // Listeyi güncelle
+                    // Yeni bir Rental kaydı oluştur
+                    var rental = new Rental
+                    {
+                        CarId = carId,
+                        UserId = GetCurrentUserId(), // Mevcut kullanıcı ID'sini alın (bunu uygulamanıza uygun hale getirin)
+                        StartDate = DateTime.Now,    // Kiralama başlangıç tarihi
+                        EndDate = null               // Kullanıcı aracı teslim edene kadar boş bırakılır
+                    };
+
+                    // Rental kaydını ekleyin
+                    context.Rentals.Add(rental);
+                    context.SaveChanges(); // Değişiklikleri kaydet
+
+                    MessageBox.Show("Araç başarıyla kiralandı.");
                 }
                 else
                 {
-                    MessageBox.Show("Araç bulunamadı.");
+                    MessageBox.Show("Bu araç zaten kiralanmış.");
                 }
             }
+
+            // Listeyi güncelle
+            ListOfRentals();
+            ListOfCars();
+        }
+        private int GetCurrentUserId()
+        {
+            // Kullanıcı giriş sistemi varsa burada oturumdaki kullanıcı ID'sini alın
+            // Örnek bir değer döndürüyorum:
+            return 1; // Örneğin, 1 numaralı kullanıcı
         }
 
         private void cbxModel_SelectedIndexChanged(object sender, EventArgs e)
