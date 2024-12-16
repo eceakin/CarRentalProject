@@ -42,7 +42,9 @@
             // 
             // dgwFilter
             // 
+            this.dgwFilter.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwFilter.GridColor = System.Drawing.SystemColors.InfoText;
             this.dgwFilter.Location = new System.Drawing.Point(169, 77);
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
@@ -52,23 +54,26 @@
             // 
             // dtpStartDate
             // 
+            this.dtpStartDate.Font = new System.Drawing.Font("Microsoft YaHei", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.dtpStartDate.Location = new System.Drawing.Point(368, 298);
             this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(224, 22);
+            this.dtpStartDate.Size = new System.Drawing.Size(224, 25);
             this.dtpStartDate.TabIndex = 1;
             // 
             // dtpEndDate
             // 
+            this.dtpEndDate.Font = new System.Drawing.Font("Microsoft YaHei", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.dtpEndDate.Location = new System.Drawing.Point(368, 326);
             this.dtpEndDate.Name = "dtpEndDate";
-            this.dtpEndDate.Size = new System.Drawing.Size(224, 22);
+            this.dtpEndDate.Size = new System.Drawing.Size(224, 25);
             this.dtpEndDate.TabIndex = 2;
             // 
             // btnRent
             // 
-            this.btnRent.Location = new System.Drawing.Point(207, 367);
+            this.btnRent.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnRent.Location = new System.Drawing.Point(169, 367);
             this.btnRent.Name = "btnRent";
-            this.btnRent.Size = new System.Drawing.Size(385, 52);
+            this.btnRent.Size = new System.Drawing.Size(480, 52);
             this.btnRent.TabIndex = 3;
             this.btnRent.Text = "Aracı Kirala";
             this.btnRent.UseVisualStyleBackColor = true;
@@ -86,11 +91,12 @@
             // 
             // goToRentaledForm
             // 
-            this.goToRentaledForm.Location = new System.Drawing.Point(207, 425);
+            this.goToRentaledForm.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.goToRentaledForm.Location = new System.Drawing.Point(169, 425);
             this.goToRentaledForm.Name = "goToRentaledForm";
-            this.goToRentaledForm.Size = new System.Drawing.Size(385, 52);
+            this.goToRentaledForm.Size = new System.Drawing.Size(480, 52);
             this.goToRentaledForm.TabIndex = 6;
-            this.goToRentaledForm.Text = "Kiralanan Araçları Görmek İiçin Tıklayınız";
+            this.goToRentaledForm.Text = "Kiralanan Araçları Görmek İçin Tıklayınız";
             this.goToRentaledForm.UseVisualStyleBackColor = true;
             this.goToRentaledForm.Click += new System.EventHandler(this.goToRentaledForm_Click);
             // 

@@ -78,7 +78,9 @@
             // 
             // dgwFilter
             // 
+            this.dgwFilter.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwFilter.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dgwFilter.Location = new System.Drawing.Point(262, 76);
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;

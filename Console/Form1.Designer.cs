@@ -37,6 +37,8 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblPrice = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.txtMaxPrice = new System.Windows.Forms.TextBox();
             this.txtMinPrice = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,8 +47,6 @@
             this.goToAddCarFormBtn = new System.Windows.Forms.Button();
             this.goToRentalFormBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
             this.gbxPrice.SuspendLayout();
@@ -55,8 +55,9 @@
             // 
             // dgwFilter
             // 
-            this.dgwFilter.BackgroundColor = System.Drawing.SystemColors.Highlight;
+            this.dgwFilter.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwFilter.GridColor = System.Drawing.SystemColors.ControlText;
             this.dgwFilter.Location = new System.Drawing.Point(401, 209);
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
@@ -135,6 +136,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fiyata Göre Ara";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(158, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 16);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Min Fiyat";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(308, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 16);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Max Fiyat";
+            // 
             // txtMaxPrice
             // 
             this.txtMaxPrice.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -203,24 +222,6 @@
             this.label1.Size = new System.Drawing.Size(156, 37);
             this.label1.TabIndex = 12;
             this.label1.Text = "Ana Sayfa";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(308, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 16);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Max Fiyat";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(158, 25);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 16);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Min Fiyat";
             // 
             // Form1
             // 
