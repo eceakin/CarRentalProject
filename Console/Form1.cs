@@ -56,11 +56,11 @@ namespace Console
                                           StartDate = rental.StartDate,
                                           EndDate = rental.EndDate
                                       };
-                 var carModels = context.Cars
-                    .Select(c => c.Model)
+                /* var carModels = context.Rentals
+                    .Select(c => c.CarId)
                     .Distinct()
-                    .ToList();
-                cbxRental.DataSource = carModels;
+                    .ToList(); */ 
+               // cbxRental.DataSource = carModels;
 
 
             }
@@ -160,24 +160,7 @@ namespace Console
             // Seçilen modele göre araçları filtreliyoruz
             ListCarsByModel(selectedModel);
         }
-        private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedModel = cbxRental.SelectedItem.ToString();
-            ListRentalsByModel(selectedModel);
-
-        }
-        private void ListRentalsByModel(string model)
-        {
-            using (AppDbContext context = new AppDbContext())
-            {
-                // Seçilen modele göre araçları filtreliyoruz
-                var cars = context.Cars
-                    .Where(c => c.Model == model)  // Kiralanabilir araçlar
-                    .ToList();
-
-                dgwRentals.DataSource = cars;
-            }
-        }
+    
 
 
 
@@ -261,11 +244,68 @@ namespace Console
 
         }
 
-       
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            ListCarsByModelName(txtName.Text);
+        }
+        private void ListCarsByModelName(string key)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Model.Contains(key) && c.isAvailable == true) // Kiralanabilir araçlar
+                    .ToList();
+
+                dgwFilter.DataSource = cars;
+            }
+        }
+
+        private void txtPrice_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtPrice.Text, out int price))
+            {
+                ListCarsByPrice(price);
+            }
+           
+        }
+
+
+        private void ListCarsByPrice(int key)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Price > key && c.isAvailable == true) // Kiralanabilir araçlar
+                    .ToList();
+
+                dgwFilter.DataSource = cars;
+            }
+        }
 
 
 
+        /* Rental Listeleme
+  
+            private void ListRentalsByModel(string model)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Model == model)  // Kiralanabilir araçlar
+                    .ToList();
 
+                dgwRentals.DataSource = cars;
+            }
+        }
+            private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedModel = cbxRental.SelectedItem.ToString();
+            ListRentalsByModel(selectedModel);
+
+        } */
 
 
 
