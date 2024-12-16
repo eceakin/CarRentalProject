@@ -72,28 +72,22 @@ namespace Console
         {
             using (AppDbContext context = new AppDbContext())
             {
-                // Bugünkü tarihi al
                 DateTime today = DateTime.Now;
 
-                // Kiralama bitiş tarihi geçmiş olan araçları bul
+                // Kiralama bitiş tarihi geçmiş olan araçların durumunu güncelle
                 var rentals = context.Rentals
                     .Where(r => r.EndDate < today)
                     .ToList();
 
                 foreach (var rental in rentals)
                 {
-                    // Aracın durumunu güncelle
                     var car = context.Cars.FirstOrDefault(c => c.CarId == rental.CarId);
                     if (car != null && !car.isAvailable)
                     {
-                        car.isAvailable = true; // Aracı tekrar kiralanabilir yap
+                        car.isAvailable = true;
                     }
-
-                    // Gerekirse kiralama kaydını da silebilirsin
-                    // context.Rentals.Remove(rental);
                 }
 
-                // Değişiklikleri kaydet
                 context.SaveChanges();
             }
             ListOfCars();
@@ -144,24 +138,21 @@ namespace Console
 
             using (AppDbContext context = new AppDbContext())
             {
-                // Seçilen aracı kontrol et
                 var car = context.Cars.FirstOrDefault(c => c.CarId == carId);
                 if (car != null && car.isAvailable)
                 {
-                    car.isAvailable = false; // Artık kiralanabilir değil
-                      // Değişiklikleri kaydet
+                    car.isAvailable = false;
 
-                    // Yeni bir Rental kaydı oluştur
                     var rental = new Rental
                     {
                         CarId = carId,
-                        UserId = GetCurrentUserId(), // Mevcut kullanıcı ID'sini alın
+                        UserId = GetCurrentUserId(),
                         StartDate = startDate,
                         EndDate = endDate
                     };
 
                     context.Rentals.Add(rental);
-                    context.SaveChanges(); // Değişiklikleri kaydet
+                    context.SaveChanges();
 
                     MessageBox.Show("Araç başarıyla kiralandı.");
                 }

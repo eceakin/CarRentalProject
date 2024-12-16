@@ -19,5 +19,7 @@ namespace DataAccessLayer.Abstract
         List<Rental> GetRentalsByCarId(int carId);
         List<Rental> GetRentalsByCustomerId(int userId);
         List<Rental> GetAvailableCars();
+        List<object> GetRentalsWithCarModels()
+           ;
     }
 }

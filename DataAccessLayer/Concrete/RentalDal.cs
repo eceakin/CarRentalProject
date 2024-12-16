@@ -90,5 +90,25 @@ namespace DataAccessLayer.Concrete
                 return context.Rentals.Where(r => r.EndDate == null).ToList();
             }
         }
+
+        public List<object> GetRentalsWithCarModels()
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                var rentalsWithCars = from rental in context.Rentals
+                                      join car in context.Cars
+                                      on rental.CarId equals car.CarId
+                                      select new
+                                      {
+                                          RentalId = rental.RentalId,
+                                          Model = car.Model, // Araç modeli
+                                          UserId = rental.UserId,
+                                          StartDate = rental.StartDate,
+                                          EndDate = rental.EndDate
+                                      };
+
+                return rentalsWithCars.ToList<object>();
+            }
+        }
     }
 }

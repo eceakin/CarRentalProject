@@ -17,5 +17,6 @@ namespace BusinessLayer.Abstract
         // Kiralama'ya özgü işlemler
         List<Rental> GetRentalsByCustomerId(int customerId);
         List<Rental> GetAvailableRentals();
+        List<object> GetRentalsWithCarModels();
     }
 }

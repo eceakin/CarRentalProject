@@ -74,5 +74,10 @@ namespace BusinessLayer.Concrete
         {
             return _rentalDal.GetAvailableCars();
         }
+
+        public List<object> GetRentalsWithCarModels()
+        {
+            return _rentalDal.GetRentalsWithCarModels();
+        }
     }
 }

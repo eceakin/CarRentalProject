@@ -17,7 +17,7 @@ namespace DataAccessLayer.Abstract
 
         // Araba'ya özgü metotlar
         List<Car> GetAvailableCars();
-
+        
     }
 
 

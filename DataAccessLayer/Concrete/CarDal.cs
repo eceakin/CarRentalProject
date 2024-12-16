@@ -70,7 +70,21 @@ namespace DataAccessLayer.Concrete
         {
             using (var context = new AppDbContext())
             {
-                return context.Cars.Where(c => c.isAvailable).ToList();
+                //  return context.Cars.Where(c => c.isAvailable).ToList();
+
+                DateTime today = DateTime.Now;
+
+                // Hala kirada olan araçları hariç tut
+                var unavailableCarIds = context.Rentals
+                    .Where(r => r.EndDate >= today)
+                    .Select(r => r.CarId)
+                    .Distinct()
+                    .ToList();
+
+                // Kiralanabilir olan araçlar
+                return context.Cars
+                    .Where(c => c.isAvailable && !unavailableCarIds.Contains(c.CarId))
+                    .ToList();
             }
         }
     }
