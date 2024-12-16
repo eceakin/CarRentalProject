@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgwFilter = new System.Windows.Forms.DataGridView();
             this.gbxModel = new System.Windows.Forms.GroupBox();
             this.cbxCar = new System.Windows.Forms.ComboBox();
@@ -48,6 +49,7 @@
             this.txtAddModel = new System.Windows.Forms.TextBox();
             this.txtAddPrice = new System.Windows.Forms.TextBox();
             this.chkIsAvailable = new System.Windows.Forms.CheckBox();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgwFilter)).BeginInit();
             this.gbxModel.SuspendLayout();
             this.gbxPrice.SuspendLayout();
@@ -58,11 +60,11 @@
             // dgwFilter
             // 
             this.dgwFilter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwFilter.Location = new System.Drawing.Point(87, 216);
+            this.dgwFilter.Location = new System.Drawing.Point(53, 144);
             this.dgwFilter.Name = "dgwFilter";
             this.dgwFilter.RowHeadersWidth = 51;
             this.dgwFilter.RowTemplate.Height = 24;
-            this.dgwFilter.Size = new System.Drawing.Size(420, 130);
+            this.dgwFilter.Size = new System.Drawing.Size(629, 200);
             this.dgwFilter.TabIndex = 0;
             // 
             // gbxModel
@@ -149,17 +151,17 @@
             // dgwRentals
             // 
             this.dgwRentals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwRentals.Location = new System.Drawing.Point(546, 216);
+            this.dgwRentals.Location = new System.Drawing.Point(772, 161);
             this.dgwRentals.Name = "dgwRentals";
             this.dgwRentals.RowHeadersWidth = 51;
             this.dgwRentals.RowTemplate.Height = 24;
-            this.dgwRentals.Size = new System.Drawing.Size(420, 130);
+            this.dgwRentals.Size = new System.Drawing.Size(853, 227);
             this.dgwRentals.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(691, 183);
+            this.label2.Location = new System.Drawing.Point(1129, 142);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(109, 16);
             this.label2.TabIndex = 8;
@@ -196,7 +198,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(244, 187);
+            this.label4.Location = new System.Drawing.Point(249, 112);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(85, 16);
             this.label4.TabIndex = 9;
@@ -204,9 +206,9 @@
             // 
             // btnAddListing
             // 
-            this.btnAddListing.Location = new System.Drawing.Point(504, 464);
+            this.btnAddListing.Location = new System.Drawing.Point(505, 445);
             this.btnAddListing.Name = "btnAddListing";
-            this.btnAddListing.Size = new System.Drawing.Size(121, 23);
+            this.btnAddListing.Size = new System.Drawing.Size(121, 28);
             this.btnAddListing.TabIndex = 10;
             this.btnAddListing.Text = "İLAN EKLE";
             this.btnAddListing.UseVisualStyleBackColor = true;
@@ -214,14 +216,14 @@
             // 
             // txtAddModel
             // 
-            this.txtAddModel.Location = new System.Drawing.Point(465, 382);
+            this.txtAddModel.Location = new System.Drawing.Point(466, 368);
             this.txtAddModel.Name = "txtAddModel";
             this.txtAddModel.Size = new System.Drawing.Size(183, 22);
             this.txtAddModel.TabIndex = 11;
             // 
             // txtAddPrice
             // 
-            this.txtAddPrice.Location = new System.Drawing.Point(465, 410);
+            this.txtAddPrice.Location = new System.Drawing.Point(466, 396);
             this.txtAddPrice.Name = "txtAddPrice";
             this.txtAddPrice.Size = new System.Drawing.Size(183, 22);
             this.txtAddPrice.TabIndex = 12;
@@ -229,7 +231,7 @@
             // chkIsAvailable
             // 
             this.chkIsAvailable.AutoSize = true;
-            this.chkIsAvailable.Location = new System.Drawing.Point(514, 438);
+            this.chkIsAvailable.Location = new System.Drawing.Point(515, 424);
             this.chkIsAvailable.Name = "chkIsAvailable";
             this.chkIsAvailable.Size = new System.Drawing.Size(96, 20);
             this.chkIsAvailable.TabIndex = 13;
@@ -240,7 +242,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 566);
+            this.ClientSize = new System.Drawing.Size(1712, 566);
             this.Controls.Add(this.chkIsAvailable);
             this.Controls.Add(this.txtAddPrice);
             this.Controls.Add(this.txtAddModel);
@@ -293,6 +295,7 @@
         private System.Windows.Forms.TextBox txtAddModel;
         private System.Windows.Forms.TextBox txtAddPrice;
         private System.Windows.Forms.CheckBox chkIsAvailable;
+        private System.Windows.Forms.Timer Timer;
     }
 }
 
