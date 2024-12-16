@@ -243,8 +243,141 @@ namespace Console
 
 
         }
+        // aynı anda filreleme 
+        private void ListCars(string modelKey, int? priceKey)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Tüm araçlar ile başlıyoruz
+                var query = context.Cars.AsQueryable();
 
+                // Model adına göre filtreleme
+                if (!string.IsNullOrEmpty(modelKey))
+                {
+                    query = query.Where(c => c.Model.Contains(modelKey));
+                }
+
+                // Fiyatına göre filtreleme
+                if (priceKey.HasValue)
+                {
+                    query = query.Where(c => c.Price > priceKey.Value);
+                }
+
+                // Sadece kiralanabilir araçlar
+                query = query.Where(c => c.isAvailable == true);
+
+                // Sonuçları alıyoruz
+                var cars = query.ToList();
+
+                // Datagrid'e bind ediyoruz
+                dgwFilter.DataSource = cars;
+            }
+        }
         private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            int? price = null;
+            if (int.TryParse(txtPrice.Text, out int parsedPrice))
+            {
+                price = parsedPrice;
+            }
+
+            ListCars(txtName.Text, price);
+        }
+        private void txtPrice_TextChanged(object sender, EventArgs e)
+        {
+            int? price = null;
+            if (int.TryParse(txtPrice.Text, out int parsedPrice))
+            {
+                price = parsedPrice;
+            }
+
+            ListCars(txtName.Text, price);
+        }
+
+        private void btnAddListing_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtAddModel.Text))
+            {
+                MessageBox.Show("Lütfen araba modeli giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtAddPrice.Text, out int price) || price <= 0)
+            {
+                MessageBox.Show("Lütfen geçerli bir fiyat giriniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                // Formdan verileri al
+                string model = txtAddModel.Text;
+                bool isAvailable = chkIsAvailable.Checked;
+
+                // Fiyat girişini kontrol et ve dönüştür
+                if (!int.TryParse(txtAddPrice.Text, out int carPrice))
+                {
+                    MessageBox.Show("Lütfen geçerli bir fiyat girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Yeni araba nesnesini oluştur
+                var newCar = new Car
+                {
+                    Model = model,
+                    Price = price,
+                    isAvailable = isAvailable
+                };
+
+                // Veritabanına ekle
+                using (AppDbContext context = new AppDbContext())
+                {
+                    context.Cars.Add(newCar);
+                    context.SaveChanges();
+                }
+
+                // Kullanıcıya bilgi ver
+                MessageBox.Show("Araba başarıyla eklendi!", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Giriş alanlarını temizle
+                txtAddModel.Text = string.Empty;
+                txtAddPrice.Text = string.Empty;
+                chkIsAvailable.Checked = false;
+
+                // Güncel listeyi göster
+                ListOfCars();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Bir hata oluştu: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+
+
+        /* Rental Listeleme
+  
+            private void ListRentalsByModel(string model)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Seçilen modele göre araçları filtreliyoruz
+                var cars = context.Cars
+                    .Where(c => c.Model == model)  // Kiralanabilir araçlar
+                    .ToList();
+
+                dgwRentals.DataSource = cars;
+            }
+        }
+            private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedModel = cbxRental.SelectedItem.ToString();
+            ListRentalsByModel(selectedModel);
+
+        } */
+
+
+        /* Filreler 
+         *  private void txtName_TextChanged(object sender, EventArgs e)
         {
             ListCarsByModelName(txtName.Text);
         }
@@ -282,30 +415,13 @@ namespace Console
 
                 dgwFilter.DataSource = cars;
             }
-        }
-
-
-
-        /* Rental Listeleme
-  
-            private void ListRentalsByModel(string model)
-        {
-            using (AppDbContext context = new AppDbContext())
-            {
-                // Seçilen modele göre araçları filtreliyoruz
-                var cars = context.Cars
-                    .Where(c => c.Model == model)  // Kiralanabilir araçlar
-                    .ToList();
-
-                dgwRentals.DataSource = cars;
-            }
-        }
-            private void cbxRental_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedModel = cbxRental.SelectedItem.ToString();
-            ListRentalsByModel(selectedModel);
-
         } */
+
+
+
+
+
+
 
 
 
@@ -551,5 +667,5 @@ LoadListings(); // Listeyi yenile
              dgvAvailableCars.Columns.Add(rentButtonColumn);
          }*/
 
-    }
+    
 }
