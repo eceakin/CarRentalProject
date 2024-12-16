@@ -24,10 +24,9 @@ namespace Console
         private void RentalForm_Load(object sender, EventArgs e)
         {
             ListOfCars();
-            ListOfRentals();
         }
 
-        private void ListOfRentals()
+      /*  private void ListOfRentals()
         {
             using (AppDbContext context = new AppDbContext())
             {
@@ -45,7 +44,7 @@ namespace Console
                 /* var carModels = context.Rentals
                     .Select(c => c.CarId)
                     .Distinct()
-                    .ToList(); */
+                    .ToList(); 
                 // cbxRental.DataSource = carModels;
 
 
@@ -55,8 +54,52 @@ namespace Console
             dgwRentals.Columns["RentalId"].Visible = false;
             dgwRentals.Columns["UserId"].Visible = false;
 
+        } */ 
+        private void TimerFunc()
+        {
+            Timer timer = new Timer();
+            timer.Interval = 10000; // Her 60 saniyede bir kontrol
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateCarAvailability();
+        }
+
+        private void UpdateCarAvailability()
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                // Bugünkü tarihi al
+                DateTime today = DateTime.Now;
+
+                // Kiralama bitiş tarihi geçmiş olan araçları bul
+                var rentals = context.Rentals
+                    .Where(r => r.EndDate < today)
+                    .ToList();
+
+                foreach (var rental in rentals)
+                {
+                    // Aracın durumunu güncelle
+                    var car = context.Cars.FirstOrDefault(c => c.CarId == rental.CarId);
+                    if (car != null && !car.isAvailable)
+                    {
+                        car.isAvailable = true; // Aracı tekrar kiralanabilir yap
+                    }
+
+                    // Gerekirse kiralama kaydını da silebilirsin
+                    // context.Rentals.Remove(rental);
+                }
+
+                // Değişiklikleri kaydet
+                context.SaveChanges();
+            }
+            ListOfCars();
+            // Listeyi yenile
+
+        }
 
 
         private void ListOfCars()
@@ -131,7 +174,7 @@ namespace Console
             // Listeyi güncelle
 
             ListOfCars();
-            ListOfRentals();
+            //ListOfRentals();
         }
         private int GetCurrentUserId()
         {
@@ -160,6 +203,13 @@ namespace Console
         {
             var Form1 = new Form1();
             Form1.Show();
+            this.Hide();
+        }
+
+        private void goToRentaledForm_Click(object sender, EventArgs e)
+        {
+            var RentaledCarsForm = new RentaledCarsForm();
+            RentaledCarsForm.Show();
             this.Hide();
         }
 

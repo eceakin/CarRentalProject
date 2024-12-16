@@ -12,6 +12,7 @@ using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -47,7 +48,7 @@ namespace Console
         private void TimerFunc()
         {
             Timer timer = new Timer();
-            timer.Interval = 10000; // Her 60 saniyede bir kontrol
+            timer.Interval = 10000; // Her 10 saniyede bir kontrol
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -87,7 +88,7 @@ namespace Console
             }
 
             // Listeyi yenile
-            ListOfCars();
+            
         }
 
         // TİMER BİTİŞ 
@@ -180,7 +181,7 @@ namespace Console
                 dgwFilter.DataSource = cars;
             }
         }
-        private void ListCars(string modelKey, int? priceKey)
+        private void ListCars(string modelKey, int? minPriceKey, int? maxPriceKey)
         {
             using (AppDbContext context = new AppDbContext())
             {
@@ -193,10 +194,15 @@ namespace Console
                     query = query.Where(c => c.Model.Contains(modelKey));
                 }
 
-                // Fiyatına göre filtreleme
-                if (priceKey.HasValue)
+                // Min ve Max fiyatına göre filtreleme
+                if (minPriceKey.HasValue)
                 {
-                    query = query.Where(c => c.Price > priceKey.Value);
+                    query = query.Where(c => c.Price >= minPriceKey.Value); // Min fiyat
+                }
+
+                if (maxPriceKey.HasValue)
+                {
+                    query = query.Where(c => c.Price <= maxPriceKey.Value); // Max fiyat
                 }
 
                 // Sadece kiralanabilir araçlar
@@ -208,26 +214,27 @@ namespace Console
                 // Datagrid'e bind ediyoruz
                 dgwFilter.DataSource = cars;
             }
+
+
+            
+
+        
         }
         private void txtName_TextChanged(object sender, EventArgs e)
-        {
-            int? price = null;
-            if (int.TryParse(txtPrice.Text, out int parsedPrice))
-            {
-                price = parsedPrice;
-            }
+        {  // Kullanıcı model adı ve fiyat aralığını girdiğinde filtreleme yapacağız
+            int? minPrice = string.IsNullOrEmpty(txtMinPrice.Text) ? (int?)null : Convert.ToInt32(txtMinPrice.Text); // Min fiyat
+            int? maxPrice = string.IsNullOrEmpty(txtMaxPrice.Text) ? (int?)null : Convert.ToInt32(txtMaxPrice.Text); // Max fiyat
 
-            ListCars(txtName.Text, price);
+            // ListCars metodunu çağırıyoruz (model adı, min ve max fiyat ile)
+            ListCars(txtName.Text, minPrice, maxPrice);
         }
         private void txtPrice_TextChanged(object sender, EventArgs e)
         {
-            int? price = null;
-            if (int.TryParse(txtPrice.Text, out int parsedPrice))
-            {
-                price = parsedPrice;
-            }
+            int? minPrice = string.IsNullOrEmpty(txtMinPrice.Text) ? (int?)null : Convert.ToInt32(txtMinPrice.Text); // Min fiyat
+            int? maxPrice = string.IsNullOrEmpty(txtMaxPrice.Text) ? (int?)null : Convert.ToInt32(txtMaxPrice.Text); // Max fiyat
 
-            ListCars(txtName.Text, price);
+            // ListCars metodunu çağırıyoruz (model adı, min ve max fiyat ile)
+            ListCars(txtName.Text, minPrice, maxPrice);
         }
 
         private void goToRentalFormBtn_Click(object sender, EventArgs e)
@@ -244,6 +251,51 @@ namespace Console
             this.Hide();
         }
 
+        private void txtMaxPrice_TextChanged(object sender, EventArgs e)
+        {
+            int? minPrice = string.IsNullOrEmpty(txtMinPrice.Text) ? (int?)null : Convert.ToInt32(txtMinPrice.Text); // Min fiyat
+            int? maxPrice = string.IsNullOrEmpty(txtMaxPrice.Text) ? (int?)null : Convert.ToInt32(txtMaxPrice.Text); // Max fiyat
+
+            // ListCars metodunu çağırıyoruz (model adı, min ve max fiyat ile)
+            ListCars(txtName.Text, minPrice, maxPrice);
+        }
+
+       /* private void txtMinPrice_Enter(object sender, EventArgs e)
+        {
+            if (txtMinPrice.Text == "Min Fiyat")
+            {
+                txtMinPrice.Text = "";
+                txtMinPrice.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtMinPrice_Leave(object sender, EventArgs e)
+        {
+            if (txtMinPrice.Text == "")
+            {
+                txtMinPrice.Text = "Min Fiyat";
+                txtMinPrice.ForeColor = Color.Silver;
+            }
+        }
+
+        private void txtMaxPrice_Leave(object sender, EventArgs e)
+        {
+            if (txtMaxPrice.Text == "")
+            {
+                txtMaxPrice.Text = "Max Fiyat";
+                txtMaxPrice.ForeColor = Color.Silver;
+            }
+        }
+
+        private void txtMaxPrice_Enter(object sender, EventArgs e)
+        {
+            if (txtMaxPrice.Text == "Max Fiyat")
+            {
+                txtMaxPrice.Text = "";
+                txtMaxPrice.ForeColor = Color.Black;
+            }
+        }
+       */
         // FİLTRELER BİTİŞ 
 
 
