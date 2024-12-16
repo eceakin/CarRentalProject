@@ -36,6 +36,7 @@
             // 
             // dgwRentals
             // 
+            this.dgwRentals.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgwRentals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwRentals.Location = new System.Drawing.Point(37, 93);
             this.dgwRentals.Name = "dgwRentals";

@@ -26,28 +26,12 @@ namespace Console
         }
         private void ListOfRentals()
         {
-            using (AppDbContext context = new AppDbContext())
-            {
-                var rentalsWithCars = from rental in context.Rentals
-                                      join car in context.Cars
-                                      on rental.CarId equals car.CarId
-                                      select new
-                                      {
-                                          RentalId = rental.RentalId,
-                                          Model = car.Model,
-                                          UserId = rental.UserId,
-                                          StartDate = rental.StartDate,
-                                          EndDate = rental.EndDate
-                                      };
-       
-
-
-            }
             RentalManager rentalManager = new RentalManager(new RentalDal());
-            dgwRentals.DataSource = rentalManager.GetAllRentals();
+            dgwRentals.DataSource = rentalManager.GetRentalsWithCarModels();
+
+            // İstenmeyen sütunları gizleme
             dgwRentals.Columns["RentalId"].Visible = false;
             dgwRentals.Columns["UserId"].Visible = false;
-
         }
 
         private void button1_Click(object sender, EventArgs e)
